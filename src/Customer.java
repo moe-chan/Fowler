@@ -22,22 +22,23 @@ class Customer {
 		int frequentRenterPoints = 0;
 		Enumeration rentals = _rentals.elements();
 		String result = "Rental Record for " + getName() + "\n";
-		
+
 		while (rentals.hasMoreElements()) {
-			
+
 			Rental each = (Rental) rentals.nextElement();
 			frequentRenterPoints += each.getFrequentRenterPoints();
 			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle()+ "\t" +
-					String.valueOf
-					 (each.getCharge()) + "\n";
-					 totalAmount += each.getCharge();
+			result += "\t" + each.getMovie().getTitle() + "\t"
+					+ String.valueOf(each.getCharge()) + "\n";
+			totalAmount += each.getCharge();
 		}
 		// add footer lines
 		result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints)
+		result += "You earned "
+				+ String.valueOf(getTotalFrequentRenterPoints())
 				+ " frequent renter points";
 		return result;
+
 	}
 
 	// It is worth stopping to think a bit about the last refactoring. Most
@@ -87,5 +88,26 @@ class Customer {
 	private double amountFor(Rental aRental) {
 		return aRental.getCharge();
 	}
+
+	public String htmlStatement() {
+		Enumeration rentals = _rentals.elements();
+		String result = "<H1>Rentals for <EM>" + getName() + "</EM></ H1><P>\n";
+		while (rentals.hasMoreElements()) {
+		Rental each = (Rental) rentals.nextElement();
+		//show figures for each rental
+		result += each.getMovie().getTitle()+ ": " +
+				String.valueOf(each.getCharge()) + "<BR>\n";
+		
+		}
+		//add footer lines result += "<P>You
+		result += "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
+		result += "On this rental you earned <EM>" +
+				String.valueOf(getTotalFrequentRenterPoints()) +
+				"</EM> frequent renter points<P>";
+		return result;
+	}
+		
+				
+		
 
 }
